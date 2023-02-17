@@ -173,7 +173,6 @@ class MovieTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               CoverImage(
                 cover,
@@ -184,7 +183,9 @@ class MovieTile extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
+                textAlign: TextAlign.center,
               ),
+              const Spacer(),
               Text(
                 year == null ? '' : '$year',
                 style: Theme.of(context).textTheme.titleMedium,
