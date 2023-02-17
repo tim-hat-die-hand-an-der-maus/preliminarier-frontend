@@ -232,6 +232,7 @@ class CoverImage extends StatelessWidget {
       cover.url,
       height: height,
       width: width,
+      filterQuality: FilterQuality.medium,
     );
   }
 }
