@@ -123,7 +123,10 @@ class MovieTileContainer extends StatelessWidget {
             url: meta.url,
           );
         } else if (snapshot.hasError) {
-          return const MovieTile(title: 'Could not load this movie');
+          return const MovieTile(
+            title: 'Could not load this movie',
+            isFailed: true,
+          );
         } else {
           return const MovieTile(title: 'Loading...');
         }
@@ -138,9 +141,11 @@ class MovieTile extends StatelessWidget {
   final String? rating;
   final Cover? cover;
   final String? url;
+  final bool isFailed;
 
   const MovieTile({
     required this.title,
+    this.isFailed = false,
     this.year,
     this.rating,
     this.cover,
@@ -169,7 +174,10 @@ class MovieTile extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CoverImage(cover),
+              CoverImage(
+                cover,
+                loadFailurePlaceholder: isFailed,
+              ),
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -197,16 +205,28 @@ class CoverImage extends StatelessWidget {
   static const double width = 250;
 
   final Cover? cover;
+  final bool loadFailurePlaceholder;
 
-  const CoverImage(this.cover, {super.key});
+  const CoverImage(
+    this.cover, {
+    required this.loadFailurePlaceholder,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final cover = this.cover;
     if (cover == null) {
-      return Image.network(
-        'https://picsum.photos/seed/$hashCode/$width/$height?blur',
-      );
+      if (loadFailurePlaceholder) {
+        return Image.network(
+          'https://picsum.photos/seed/$hashCode/$width/$height?blur',
+        );
+      } else {
+        return const SizedBox(
+          width: width,
+          height: height,
+        );
+      }
     }
     return Image.network(
       cover.url,
