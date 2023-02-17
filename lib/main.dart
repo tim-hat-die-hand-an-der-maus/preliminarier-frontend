@@ -208,7 +208,7 @@ class MovieTile extends StatelessWidget {
 class CoverImage extends StatelessWidget {
   static const double height = 400;
   static const double width = 250;
-  static const enableFailurePhoto = false;
+  static const enableFailurePhoto = true;
 
   final Cover? cover;
   final bool loadFailurePlaceholder;
