@@ -203,6 +203,7 @@ class MovieTile extends StatelessWidget {
 class CoverImage extends StatelessWidget {
   static const double height = 400;
   static const double width = 250;
+  static const enableFailurePhoto = false;
 
   final Cover? cover;
   final bool loadFailurePlaceholder;
@@ -217,14 +218,15 @@ class CoverImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cover = this.cover;
     if (cover == null) {
-      if (loadFailurePlaceholder) {
+      if (enableFailurePhoto && loadFailurePlaceholder) {
         return Image.network(
           'https://picsum.photos/seed/$hashCode/$width/$height?blur',
         );
       } else {
-        return const SizedBox(
+        return Container(
           width: width,
           height: height,
+          color: Colors.black12,
         );
       }
     }
