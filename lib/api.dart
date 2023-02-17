@@ -110,9 +110,8 @@ extension on http.Response {
   }
 }
 
-
 class _HttpTimApi implements TimApi {
-   final Uri _baseUri;
+  final Uri _baseUri;
   final http.Client _client;
 
   _HttpTimApi(this._baseUri) : _client = RetryClient(http.Client());
