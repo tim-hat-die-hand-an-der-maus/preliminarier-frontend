@@ -68,6 +68,8 @@ jobs:
     if: success() && github.ref == 'refs/heads/main'
     needs: build
     steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
       - name: Pull Artifacts
         uses: actions/download-artifact@v3
         with:
