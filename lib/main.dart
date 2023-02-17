@@ -84,13 +84,18 @@ class MovieList extends StatelessWidget {
               child: Text('No movies in the queue'),
             );
           } else {
-            return SingleChildScrollView(
-              child: Wrap(
-                alignment: WrapAlignment.spaceEvenly,
-                children: [
-                  for (final movie in movies) MovieTileContainer(movie),
-                ],
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 270,
+                childAspectRatio: 270 / 560,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 10,
               ),
+              itemCount: movies.length,
+              itemBuilder: (context, index) {
+                final movie = movies[index];
+                return MovieTileContainer(movie);
+              },
             );
           }
         case LoadingStage.error:
@@ -163,10 +168,6 @@ class MovieTile extends StatelessWidget {
     final url = this.url;
     final year = this.year;
     return Card(
-      margin: const EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 10,
-      ),
       child: InkWell(
         onTap: url == null ? null : () => _openUrl(url),
         child: Padding(
