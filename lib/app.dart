@@ -8,6 +8,7 @@ import 'queue.dart';
 
 class TimApp extends StatelessWidget {
   final Uri apiBaseUrl;
+
   const TimApp({super.key, required this.apiBaseUrl});
 
   @override
@@ -16,13 +17,14 @@ class TimApp extends StatelessWidget {
       title: 'Finger That Mouse',
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home:  HomePage(apiBaseUrl:apiBaseUrl),
+      home: HomePage(apiBaseUrl: apiBaseUrl),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
   final Uri apiBaseUrl;
+
   const HomePage({super.key, required this.apiBaseUrl});
 
   @override
@@ -87,9 +89,10 @@ class MovieList extends StatelessWidget {
                 primary: true,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 270,
-                  childAspectRatio: 270 / 560,
-                  mainAxisSpacing: 20,
                   crossAxisSpacing: 10,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: 270 / 440,
+                  mainAxisExtent: 440
                 ),
                 itemCount: movies.length,
                 itemBuilder: (context, index) {
@@ -169,33 +172,30 @@ class MovieTile extends StatelessWidget {
     final url = this.url;
     final year = this.year;
     return Card(
-      child: InkWell(
-        onTap: url == null ? null : () => _openUrl(url),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              CoverImage(
-                cover,
-                loadFailurePlaceholder: isFailed,
-              ),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+      child: Tooltip(
+        message: title,
+        child: InkWell(
+          onTap: url == null ? null : () => _openUrl(url),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                CoverImage(
+                  cover,
+                  loadFailurePlaceholder: isFailed,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const Spacer(),
-              Text(
-                year == null ? '' : '$year',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Text(
-                rating == null ? '' : '$rating/10',
-                style: Theme.of(context).textTheme.titleMedium,
-              )
-            ],
+                const Spacer(),
+                Text(
+                  year == null ? '' : '$year',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  rating == null ? '' : '$rating/10',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const Spacer(),
+              ],
+            ),
           ),
         ),
       ),
@@ -204,7 +204,7 @@ class MovieTile extends StatelessWidget {
 }
 
 class CoverImage extends StatelessWidget {
-  static const double height = 400;
+  static const double height = 350;
   static const double width = 250;
   static const enableFailurePhoto = true;
 
@@ -212,10 +212,10 @@ class CoverImage extends StatelessWidget {
   final bool loadFailurePlaceholder;
 
   const CoverImage(
-      this.cover, {
-        required this.loadFailurePlaceholder,
-        super.key,
-      });
+    this.cover, {
+    required this.loadFailurePlaceholder,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
