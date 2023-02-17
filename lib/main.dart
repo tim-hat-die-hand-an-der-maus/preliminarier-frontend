@@ -84,18 +84,21 @@ class MovieList extends StatelessWidget {
               child: Text('No movies in the queue'),
             );
           } else {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 270,
-                childAspectRatio: 270 / 560,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 10,
+            return Scrollbar(
+              child: GridView.builder(
+                primary: true,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 270,
+                  childAspectRatio: 270 / 560,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 10,
+                ),
+                itemCount: movies.length,
+                itemBuilder: (context, index) {
+                  final movie = movies[index];
+                  return MovieTileContainer(movie);
+                },
               ),
-              itemCount: movies.length,
-              itemBuilder: (context, index) {
-                final movie = movies[index];
-                return MovieTileContainer(movie);
-              },
             );
           }
         case LoadingStage.error:
