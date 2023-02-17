@@ -17,7 +17,7 @@ abstract class TimApi {
 
   FutureOr<void> close();
 
-  factory TimApi.http() = _HttpTimApi;
+  factory TimApi.http(Uri baseUrl) => _HttpTimApi(baseUrl);
 }
 
 typedef Json = Map<String, dynamic>;
@@ -110,11 +110,12 @@ extension on http.Response {
   }
 }
 
+
 class _HttpTimApi implements TimApi {
-  final Uri _baseUri = Uri.https('api.timhatdiehandandermaus.consulting');
+   final Uri _baseUri;
   final http.Client _client;
 
-  _HttpTimApi() : _client = RetryClient(http.Client());
+  _HttpTimApi(this._baseUri) : _client = RetryClient(http.Client());
 
   @override
   Future<Movie?> getMovie(String id) async {

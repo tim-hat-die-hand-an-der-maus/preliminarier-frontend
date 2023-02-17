@@ -56,8 +56,8 @@ class QueueState {
 class QueueBloc extends Bloc<_QueueEvent, QueueState> {
   final TimApi _api;
 
-  QueueBloc()
-      : _api = TimApi.http(),
+  QueueBloc({required Uri apiBaseUrl})
+      : _api = TimApi.http(apiBaseUrl),
         super(QueueState.initial()) {
     on<_InitEvent>(_init);
 

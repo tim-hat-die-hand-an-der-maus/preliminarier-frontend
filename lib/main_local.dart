@@ -4,6 +4,6 @@ import 'app.dart';
 
 void main() {
   runApp(TimApp(
-    apiBaseUrl: Uri.https('api.timhatdiehandandermaus.consulting'),
+    apiBaseUrl: Uri.http('localhost:8080'),
   ));
 }
