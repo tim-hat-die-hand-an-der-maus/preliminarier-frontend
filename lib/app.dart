@@ -216,24 +216,55 @@ class CoverImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cover = this.cover;
+
     if (cover == null) {
-      return Container(
-        width: width,
-        height: height,
-        color: Colors.black12,
-        child: Center(
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
+      return _CoverImagePlaceholder(title);
     }
     return Image.network(
       cover.url,
       height: height,
       width: width,
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) {
+          return child;
+        } else {
+          return AnimatedSwitcher(
+            duration: const Duration(seconds: 1),
+            switchOutCurve: Curves.easeOut,
+            child: frame == null
+                ? _CoverImagePlaceholder(
+                    title,
+                    key: const Key('placeholder'),
+                  )
+                : KeyedSubtree(
+                    key: const Key('image'),
+                    child: child,
+                  ),
+          );
+        }
+      },
       filterQuality: FilterQuality.high,
+    );
+  }
+}
+
+class _CoverImagePlaceholder extends StatelessWidget {
+  final String title;
+
+  const _CoverImagePlaceholder(this.title, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: CoverImage.width,
+      height: CoverImage.height,
+      color: Colors.black12,
+      child: Center(
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
