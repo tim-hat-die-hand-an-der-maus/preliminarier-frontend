@@ -134,7 +134,6 @@ class MovieTileContainer extends StatelessWidget {
         } else if (snapshot.hasError) {
           return const MovieTile(
             title: 'Could not load this movie',
-            isFailed: true,
           );
         } else {
           return const MovieTile(title: 'Loading...');
@@ -150,11 +149,9 @@ class MovieTile extends StatelessWidget {
   final String? rating;
   final Cover? cover;
   final String? url;
-  final bool isFailed;
 
   const MovieTile({
     required this.title,
-    this.isFailed = false,
     this.year,
     this.rating,
     this.cover,
@@ -182,7 +179,7 @@ class MovieTile extends StatelessWidget {
               children: [
                 CoverImage(
                   cover,
-                  loadFailurePlaceholder: isFailed,
+                  title: title,
                 ),
                 const Spacer(),
                 Text(
@@ -206,14 +203,13 @@ class MovieTile extends StatelessWidget {
 class CoverImage extends StatelessWidget {
   static const double height = 350;
   static const double width = 250;
-  static const enableFailurePhoto = true;
 
   final Cover? cover;
-  final bool loadFailurePlaceholder;
+  final String title;
 
   const CoverImage(
     this.cover, {
-    required this.loadFailurePlaceholder,
+    required this.title,
     super.key,
   });
 
@@ -221,17 +217,17 @@ class CoverImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cover = this.cover;
     if (cover == null) {
-      if (enableFailurePhoto && loadFailurePlaceholder) {
-        return Image.network(
-          'https://picsum.photos/seed/$hashCode/$width/$height?blur',
-        );
-      } else {
-        return Container(
-          width: width,
-          height: height,
-          color: Colors.black12,
-        );
-      }
+      return Container(
+        width: width,
+        height: height,
+        color: Colors.black12,
+        child: Center(
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
     }
     return Image.network(
       cover.url,
