@@ -31,10 +31,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => QueueBloc(apiBaseUrl: apiBaseUrl),
-      child: Scaffold(
+      child: const Scaffold(
         body: Column(
           mainAxisSize: MainAxisSize.max,
-          children: const [
+          children: [
             HeaderText(),
             Expanded(child: MovieList()),
           ],
