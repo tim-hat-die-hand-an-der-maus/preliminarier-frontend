@@ -171,6 +171,9 @@ class MovieTile extends StatelessWidget {
     final rating = this.rating;
     final url = this.url;
     final year = this.year;
+
+    final theme = Theme.of(context);
+
     return Card(
       child: Tooltip(
         message: title,
@@ -190,11 +193,11 @@ class MovieTile extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   year == null ? '' : '$year',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: theme.textTheme.titleMedium,
                 ),
                 Text(
                   rating == null ? '' : '$rating/10',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: theme.textTheme.titleMedium,
                 ),
               ],
             ),
