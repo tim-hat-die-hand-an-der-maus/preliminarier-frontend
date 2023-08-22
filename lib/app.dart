@@ -223,15 +223,20 @@ class CoverImage extends StatelessWidget {
       return _CoverImagePlaceholder(title);
     }
 
-    return FadeInImage(
-      placeholder: const AssetImage('images/placeholder.png'),
-      placeholderFit: BoxFit.contain,
-      placeholderFilterQuality: FilterQuality.none,
-      image: NetworkImage(cover.url),
-      fit: BoxFit.contain,
+    return Image.network(
+      cover.url,
       filterQuality: FilterQuality.high,
-      imageErrorBuilder: (context, error, _) {
-        return _CoverImagePlaceholder(title);
+      fit: BoxFit.contain,
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) {
+          return child;
+        }
+
+        if (frame == null) {
+          return _CoverImagePlaceholder(title, key: const Key('placeholder'));
+        }
+
+        return child;
       },
     );
   }
@@ -240,7 +245,7 @@ class CoverImage extends StatelessWidget {
 class _CoverImagePlaceholder extends StatelessWidget {
   final String title;
 
-  const _CoverImagePlaceholder(this.title);
+  const _CoverImagePlaceholder(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
