@@ -38,7 +38,7 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v3
         with:
-          lfs: 'true'
+          lfs: true
       - uses: asdf-vm/actions/install@v2
       - name: Get dependencies
         run: flutter pub get
