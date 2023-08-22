@@ -240,7 +240,7 @@ class CoverImage extends StatelessWidget {
 class _CoverImagePlaceholder extends StatelessWidget {
   final String title;
 
-  const _CoverImagePlaceholder(this.title, {super.key});
+  const _CoverImagePlaceholder(this.title);
 
   @override
   Widget build(BuildContext context) {
