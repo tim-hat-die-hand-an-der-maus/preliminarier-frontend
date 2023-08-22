@@ -181,11 +181,13 @@ class MovieTile extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                CoverImage(
-                  cover,
-                  title: title,
+                Expanded(
+                  child: CoverImage(
+                    cover,
+                    title: title,
+                  ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 10),
                 Text(
                   year == null ? '' : '$year',
                   style: Theme.of(context).textTheme.titleMedium,
@@ -221,19 +223,16 @@ class CoverImage extends StatelessWidget {
       return _CoverImagePlaceholder(title);
     }
 
-    return SizedBox(
-      height: MovieTile.height - 80,
-      child: FadeInImage(
-        placeholder: const AssetImage('images/placeholder.png'),
-        placeholderFit: BoxFit.contain,
-        placeholderFilterQuality: FilterQuality.none,
-        image: NetworkImage(cover.url),
-        fit: BoxFit.contain,
-        filterQuality: FilterQuality.high,
-        imageErrorBuilder: (context, error, _) {
-          return _CoverImagePlaceholder(title);
-        },
-      ),
+    return FadeInImage(
+      placeholder: const AssetImage('images/placeholder.png'),
+      placeholderFit: BoxFit.contain,
+      placeholderFilterQuality: FilterQuality.none,
+      image: NetworkImage(cover.url),
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.high,
+      imageErrorBuilder: (context, error, _) {
+        return _CoverImagePlaceholder(title);
+      },
     );
   }
 }
