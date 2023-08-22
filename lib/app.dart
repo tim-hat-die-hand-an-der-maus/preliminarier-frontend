@@ -88,11 +88,11 @@ class MovieList extends StatelessWidget {
               child: GridView.builder(
                 primary: true,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 270,
+                  maxCrossAxisExtent: MovieTile.width,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 20,
-                  childAspectRatio: 270 / 440,
-                  mainAxisExtent: 440,
+                  childAspectRatio: MovieTile.width / MovieTile.height,
+                  mainAxisExtent: MovieTile.height,
                 ),
                 itemCount: movies.length,
                 itemBuilder: (context, index) {
@@ -144,6 +144,9 @@ class MovieTileContainer extends StatelessWidget {
 }
 
 class MovieTile extends StatelessWidget {
+  static const double width = 270;
+  static const double height = 400;
+
   final String title;
   final int? year;
   final String? rating;
@@ -176,6 +179,7 @@ class MovieTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 CoverImage(
                   cover,
@@ -190,7 +194,6 @@ class MovieTile extends StatelessWidget {
                   rating == null ? '' : '$rating/10',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 20)
               ],
             ),
           ),
@@ -201,9 +204,6 @@ class MovieTile extends StatelessWidget {
 }
 
 class CoverImage extends StatelessWidget {
-  static const int height = 350;
-  static const int width = 250;
-
   final Cover? cover;
   final String title;
 
@@ -220,19 +220,20 @@ class CoverImage extends StatelessWidget {
     if (cover == null) {
       return _CoverImagePlaceholder(title);
     }
-    return FadeInImage(
-      filterQuality: FilterQuality.high,
-      placeholder: const AssetImage('images/placeholder.png'),
-      fit: BoxFit.fitWidth,
-      image: ResizeImage(
-        NetworkImage(cover.url),
-        width: CoverImage.width,
-        height: CoverImage.height,
-        policy: ResizeImagePolicy.fit,
+
+    return SizedBox(
+      height: MovieTile.height - 80,
+      child: FadeInImage(
+        placeholder: const AssetImage('images/placeholder.png'),
+        placeholderFit: BoxFit.contain,
+        placeholderFilterQuality: FilterQuality.none,
+        image: NetworkImage(cover.url),
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.high,
+        imageErrorBuilder: (context, error, _) {
+          return _CoverImagePlaceholder(title);
+        },
       ),
-      imageErrorBuilder: (context, error, _) {
-        return _CoverImagePlaceholder(title);
-      },
     );
   }
 }
