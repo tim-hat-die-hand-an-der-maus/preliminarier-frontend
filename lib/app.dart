@@ -190,7 +190,7 @@ class MovieTile extends StatelessWidget {
                   rating == null ? '' : '$rating/10',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const Spacer(),
+                const SizedBox(height: 20)
               ],
             ),
           ),
@@ -201,8 +201,8 @@ class MovieTile extends StatelessWidget {
 }
 
 class CoverImage extends StatelessWidget {
-  static const double height = 350;
-  static const double width = 250;
+  static const int height = 350;
+  static const int width = 250;
 
   final Cover? cover;
   final String title;
@@ -220,30 +220,19 @@ class CoverImage extends StatelessWidget {
     if (cover == null) {
       return _CoverImagePlaceholder(title);
     }
-    return Image.network(
-      cover.url,
-      height: height,
-      width: width,
-      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        if (wasSynchronouslyLoaded) {
-          return child;
-        } else {
-          return AnimatedSwitcher(
-            duration: const Duration(seconds: 1),
-            switchOutCurve: Curves.easeOut,
-            child: frame == null
-                ? _CoverImagePlaceholder(
-                    title,
-                    key: const Key('placeholder'),
-                  )
-                : KeyedSubtree(
-                    key: const Key('image'),
-                    child: child,
-                  ),
-          );
-        }
-      },
+    return FadeInImage(
       filterQuality: FilterQuality.high,
+      placeholder: const AssetImage('images/placeholder.png'),
+      fit: BoxFit.fitWidth,
+      image: ResizeImage(
+        NetworkImage(cover.url),
+        width: CoverImage.width,
+        height: CoverImage.height,
+        policy: ResizeImagePolicy.fit,
+      ),
+      imageErrorBuilder: (context, error, _) {
+        return _CoverImagePlaceholder(title);
+      },
     );
   }
 }
@@ -256,8 +245,6 @@ class _CoverImagePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: CoverImage.width,
-      height: CoverImage.height,
       color: Colors.black12,
       child: Center(
         child: Text(
