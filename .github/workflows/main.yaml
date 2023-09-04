@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - uses: asdf-vm/actions/install@v2
       - name: Check lib formatting
         run: dart format lib --set-exit-if-changed --output=none
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - uses: asdf-vm/actions/install@v2
       - name: Get dependencies
         run: flutter pub get
@@ -36,7 +36,7 @@ jobs:
     needs: [check_format, lint]
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: true
       - uses: asdf-vm/actions/install@v2
@@ -59,7 +59,7 @@ jobs:
     needs: build
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Pull Artifacts
         uses: actions/download-artifact@v3
         with:
@@ -83,7 +83,7 @@ jobs:
     concurrency: production
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Substitute environment variables in values.yaml
         run: "envsubst < values.yaml > values_sub.yaml && mv values_sub.yaml values.yaml"
       - name: Deploy helm chart
