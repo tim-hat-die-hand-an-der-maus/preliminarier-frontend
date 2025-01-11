@@ -1,5 +1,0 @@
-apiVersion: v2
-name: timhatdiehandandermaus-preliminarier-frontend
-description: "It's a frontend"
-type: application
-version: 1.0.0

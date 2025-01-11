@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/exception.dart';
 import 'package:meta/meta.dart';
 
-import 'api.dart';
+import 'package:frontend/api.dart';
 
 @immutable
 abstract class _QueueEvent {}
@@ -81,8 +81,9 @@ class QueueBloc extends Bloc<_QueueEvent, QueueState> {
       return;
     }
 
-    final List<Future<Movie>> movies =
-        List.unmodifiable(movieRefs.map(_loadMovie));
+    final List<Future<Movie>> movies = List.unmodifiable(
+      movieRefs.map(_loadMovie),
+    );
     emit(state.loadingMovies(movies));
   }
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'api.dart';
-import 'color_schemes.dart';
-import 'queue.dart';
+import 'package:frontend/api.dart';
+import 'package:frontend/color_schemes.dart';
+import 'package:frontend/queue.dart';
 
 class TimApp extends StatelessWidget {
   final Uri apiBaseUrl;

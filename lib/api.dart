@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'exception.dart';
+import 'package:frontend/exception.dart';
 
 part 'api.g.dart';
 
@@ -24,8 +24,8 @@ typedef Json = Map<String, dynamic>;
 typedef FromJson<T> = T Function(Json);
 
 @immutable
-@JsonSerializable()
-class MovieRef {
+@JsonSerializable(createToJson: false)
+final class MovieRef {
   final String id;
 
   const MovieRef(this.id);
@@ -34,8 +34,8 @@ class MovieRef {
 }
 
 @immutable
-@JsonSerializable()
-class Queue {
+@JsonSerializable(createToJson: false)
+final class Queue {
   final List<MovieRef> queue;
 
   const Queue(this.queue);
@@ -51,8 +51,8 @@ enum MovieStatus {
 }
 
 @immutable
-@JsonSerializable()
-class Cover {
+@JsonSerializable(createToJson: false)
+final class Cover {
   final String url;
   final double ratio;
 
@@ -65,8 +65,8 @@ class Cover {
 }
 
 @immutable
-@JsonSerializable()
-class ImdbMetadata {
+@JsonSerializable(createToJson: false)
+final class ImdbMetadata {
   final String id;
   final String title;
   final int? year;
@@ -89,8 +89,8 @@ class ImdbMetadata {
 }
 
 @immutable
-@JsonSerializable()
-class Movie {
+@JsonSerializable(createToJson: false)
+final class Movie {
   final String id;
   final MovieStatus status;
   final ImdbMetadata imdb;

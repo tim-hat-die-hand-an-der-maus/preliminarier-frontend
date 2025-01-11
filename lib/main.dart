@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'app.dart';
+import 'package:frontend/app.dart';
 
 void main() {
   runApp(TimApp(
-    apiBaseUrl: Uri.https('api.timhatdiehandandermaus.consulting'),
+    apiBaseUrl: Uri.https('tim-api.bembel.party'),
   ));
 }

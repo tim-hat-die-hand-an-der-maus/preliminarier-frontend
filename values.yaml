@@ -1,1 +1,0 @@
-image: ghcr.io/tim-hat-die-hand-an-der-maus/preliminarier-frontend:${GITHUB_SHA}
