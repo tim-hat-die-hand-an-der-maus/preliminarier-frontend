@@ -34,10 +34,7 @@ class HomePage extends StatelessWidget {
       child: const Scaffold(
         body: Column(
           mainAxisSize: MainAxisSize.max,
-          children: [
-            HeaderText(),
-            Expanded(child: MovieList()),
-          ],
+          children: [HeaderText(), Expanded(child: MovieList())],
         ),
       ),
     );
@@ -58,10 +55,7 @@ class HeaderText extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+          child: Text(text, style: Theme.of(context).textTheme.titleLarge),
         );
       },
     );
@@ -73,41 +67,41 @@ class MovieList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<QueueBloc, QueueState>(builder: (bloc, state) {
-      switch (state.loadingStage) {
-        case LoadingStage.queue:
-          return const Center(child: CircularProgressIndicator());
-        case LoadingStage.movies:
-          final movies = state.movies;
-          if (movies.isEmpty) {
-            return const Center(
-              child: Text('No movies in the queue'),
-            );
-          } else {
-            return Scrollbar(
-              child: GridView.builder(
-                primary: true,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: MovieTile.width,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: MovieTile.width / MovieTile.height,
-                  mainAxisExtent: MovieTile.height,
+    return BlocBuilder<QueueBloc, QueueState>(
+      builder: (bloc, state) {
+        switch (state.loadingStage) {
+          case LoadingStage.queue:
+            return const Center(child: CircularProgressIndicator());
+          case LoadingStage.movies:
+            final movies = state.movies;
+            if (movies.isEmpty) {
+              return const Center(child: Text('No movies in the queue'));
+            } else {
+              return Scrollbar(
+                child: GridView.builder(
+                  primary: true,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: MovieTile.width,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: MovieTile.width / MovieTile.height,
+                    mainAxisExtent: MovieTile.height,
+                  ),
+                  itemCount: movies.length,
+                  itemBuilder: (context, index) {
+                    final movie = movies[index];
+                    return MovieTileContainer(movie);
+                  },
                 ),
-                itemCount: movies.length,
-                itemBuilder: (context, index) {
-                  final movie = movies[index];
-                  return MovieTileContainer(movie);
-                },
-              ),
+              );
+            }
+          case LoadingStage.error:
+            return Center(
+              child: Text('An error occurred: ${state.queueLoadingError}'),
             );
-          }
-        case LoadingStage.error:
-          return Center(
-            child: Text('An error occurred: ${state.queueLoadingError}'),
-          );
-      }
-    });
+        }
+      },
+    );
   }
 }
 
@@ -132,9 +126,7 @@ class MovieTileContainer extends StatelessWidget {
             url: meta.url,
           );
         } else if (snapshot.hasError) {
-          return const MovieTile(
-            title: 'Could not load this movie',
-          );
+          return const MovieTile(title: 'Could not load this movie');
         } else {
           return const MovieTile(title: 'Loading...');
         }
@@ -184,12 +176,7 @@ class MovieTile extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Expanded(
-                  child: CoverImage(
-                    cover,
-                    title: title,
-                  ),
-                ),
+                Expanded(child: CoverImage(cover, title: title)),
                 const SizedBox(height: 10),
                 Text(
                   year == null ? '' : '$year',
@@ -212,11 +199,7 @@ class CoverImage extends StatelessWidget {
   final Cover? cover;
   final String title;
 
-  const CoverImage(
-    this.cover, {
-    required this.title,
-    super.key,
-  });
+  const CoverImage(this.cover, {required this.title, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -254,12 +237,7 @@ class _CoverImagePlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black12,
-      child: Center(
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: Center(child: Text(title, textAlign: TextAlign.center)),
     );
   }
 }

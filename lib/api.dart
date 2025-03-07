@@ -44,11 +44,7 @@ final class Queue {
 }
 
 @JsonEnum(fieldRename: FieldRename.pascal)
-enum MovieStatus {
-  queued,
-  watched,
-  deleted,
-}
+enum MovieStatus { queued, watched, deleted }
 
 @immutable
 @JsonSerializable(createToJson: false)
@@ -56,10 +52,7 @@ final class Cover {
   final String url;
   final double ratio;
 
-  const Cover({
-    required this.url,
-    required this.ratio,
-  });
+  const Cover({required this.url, required this.ratio});
 
   factory Cover.fromJson(Json json) => _$CoverFromJson(json);
 }
@@ -95,11 +88,7 @@ final class Movie {
   final MovieStatus status;
   final ImdbMetadata imdb;
 
-  const Movie({
-    required this.id,
-    required this.status,
-    required this.imdb,
-  });
+  const Movie({required this.id, required this.status, required this.imdb});
 
   factory Movie.fromJson(Json json) => _$MovieFromJson(json);
 }

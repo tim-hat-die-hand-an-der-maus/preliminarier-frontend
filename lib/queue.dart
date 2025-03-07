@@ -14,11 +14,7 @@ class _InitEvent implements _QueueEvent {
   const _InitEvent();
 }
 
-enum LoadingStage {
-  queue,
-  movies,
-  error,
-}
+enum LoadingStage { queue, movies, error }
 
 @immutable
 class QueueState {
@@ -32,16 +28,11 @@ class QueueState {
     this.queueLoadingError,
   });
 
-  factory QueueState.initial() => const QueueState._(
-        loadingStage: LoadingStage.queue,
-        movies: [],
-      );
+  factory QueueState.initial() =>
+      const QueueState._(loadingStage: LoadingStage.queue, movies: []);
 
   QueueState loadingMovies(List<Future<Movie>> movies) {
-    return QueueState._(
-      loadingStage: LoadingStage.movies,
-      movies: movies,
-    );
+    return QueueState._(loadingStage: LoadingStage.movies, movies: movies);
   }
 
   QueueState loadingError(String error) {
@@ -57,8 +48,8 @@ class QueueBloc extends Bloc<_QueueEvent, QueueState> {
   final TimApi _api;
 
   QueueBloc({required Uri apiBaseUrl})
-      : _api = TimApi.http(apiBaseUrl),
-        super(QueueState.initial()) {
+    : _api = TimApi.http(apiBaseUrl),
+      super(QueueState.initial()) {
     on<_InitEvent>(_init);
 
     add(const _InitEvent());
