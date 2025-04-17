@@ -65,7 +65,7 @@ final class ImdbMetadata {
   final int? year;
   final String rating;
   final Cover cover;
-  final String? infoPageUrl;
+  final String infoPageUrl;
 
   const ImdbMetadata({
     required this.id,
@@ -79,7 +79,7 @@ final class ImdbMetadata {
   factory ImdbMetadata.fromJson(Json json) => _$ImdbMetadataFromJson(json);
 
   String get url {
-    return infoPageUrl ?? 'https://imdb.com/title/tt$id';
+    return infoPageUrl;
   }
 }
 
