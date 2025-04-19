@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/tmdb_branding.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:frontend/api.dart';
@@ -55,7 +56,25 @@ class HeaderText extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Text(text, style: Theme.of(context).textTheme.titleLarge),
+          child: Column(
+            spacing: 10,
+            children: [
+              Text(
+                text,
+                style: Theme.of(context).textTheme.titleLarge,
+                textScaler: TextScaler.linear(2),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                kTmdbDisclaimer,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Image.asset(
+                'images/tmdb-logo.png',
+                height: Theme.of(context).textTheme.titleMedium!.fontSize,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -117,7 +136,7 @@ class MovieTileContainer extends StatelessWidget {
       builder: (_, snapshot) {
         if (snapshot.hasData) {
           final movie = snapshot.requireData;
-          final meta = movie.imdb;
+          final meta = movie.metadata;
           return MovieTile(
             title: meta.title,
             year: meta.year,

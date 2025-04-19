@@ -89,8 +89,10 @@ final class MovieMetadata {
 final class Movie {
   final String id;
   final MovieStatus status;
-  final MovieMetadata imdb;
+  final MovieMetadata? imdb;
   final MovieMetadata? tmdb;
+
+  MovieMetadata get metadata => (tmdb ?? imdb)!;
 
   const Movie({
     required this.id,
