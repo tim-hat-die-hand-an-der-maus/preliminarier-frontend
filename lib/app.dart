@@ -123,7 +123,7 @@ class MovieTileContainer extends StatelessWidget {
             year: meta.year,
             rating: meta.rating,
             cover: meta.cover,
-            url: meta.url,
+            url: meta.infoPageUrl,
           );
         } else if (snapshot.hasError) {
           return const MovieTile(title: 'Could not load this movie');

@@ -59,15 +59,15 @@ final class Cover {
 
 @immutable
 @JsonSerializable(createToJson: false)
-final class ImdbMetadata {
+final class MovieMetadata {
   final String id;
   final String title;
   final int? year;
-  final String rating;
+  final String? rating;
   final Cover cover;
   final String infoPageUrl;
 
-  const ImdbMetadata({
+  const MovieMetadata({
     required this.id,
     required this.title,
     required this.year,
@@ -76,8 +76,9 @@ final class ImdbMetadata {
     required this.infoPageUrl,
   });
 
-  factory ImdbMetadata.fromJson(Json json) => _$ImdbMetadataFromJson(json);
+  factory MovieMetadata.fromJson(Json json) => _$ImdbMetadataFromJson(json);
 
+  @Deprecated('Use infoPageUrl instead')
   String get url {
     return infoPageUrl;
   }
@@ -88,9 +89,15 @@ final class ImdbMetadata {
 final class Movie {
   final String id;
   final MovieStatus status;
-  final ImdbMetadata imdb;
+  final MovieMetadata imdb;
+  final MovieMetadata? tmdb;
 
-  const Movie({required this.id, required this.status, required this.imdb});
+  const Movie({
+    required this.id,
+    required this.status,
+    required this.imdb,
+    required this.tmdb,
+  });
 
   factory Movie.fromJson(Json json) => _$MovieFromJson(json);
 }
