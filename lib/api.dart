@@ -64,7 +64,7 @@ final class MovieMetadata {
   final String title;
   final int? year;
   final String? rating;
-  final Cover cover;
+  final Cover? cover;
   final String infoPageUrl;
 
   const MovieMetadata({
