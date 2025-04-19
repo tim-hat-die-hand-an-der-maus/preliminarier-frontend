@@ -76,7 +76,7 @@ final class MovieMetadata {
     required this.infoPageUrl,
   });
 
-  factory MovieMetadata.fromJson(Json json) => _$ImdbMetadataFromJson(json);
+  factory MovieMetadata.fromJson(Json json) => _$MovieMetadataFromJson(json);
 
   @Deprecated('Use infoPageUrl instead')
   String get url {
