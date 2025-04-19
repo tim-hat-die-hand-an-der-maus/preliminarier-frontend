@@ -77,11 +77,6 @@ final class MovieMetadata {
   });
 
   factory MovieMetadata.fromJson(Json json) => _$MovieMetadataFromJson(json);
-
-  @Deprecated('Use infoPageUrl instead')
-  String get url {
-    return infoPageUrl;
-  }
 }
 
 @immutable
