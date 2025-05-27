@@ -18,6 +18,8 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
+      - name: Get dependencies
+        run: flutter pub get
       - name: Check lib formatting
         run: dart format lib --set-exit-if-changed --output=none
 
