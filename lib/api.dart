@@ -27,8 +27,9 @@ typedef FromJson<T> = T Function(Json);
 @JsonSerializable(createToJson: false)
 final class QueueItem {
   final String id;
+  final String? userId;
 
-  const QueueItem(this.id);
+  const QueueItem({required this.id, required this.userId});
 
   factory QueueItem.fromJson(Json json) => _$QueueItemFromJson(json);
 }
