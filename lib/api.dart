@@ -13,7 +13,7 @@ part 'api.g.dart';
 abstract class TimApi {
   Future<Movie?> getMovie(String id);
 
-  Future<List<MovieRef>> getQueue();
+  Future<List<QueueItem>> getQueue();
 
   FutureOr<void> close();
 
@@ -25,18 +25,18 @@ typedef FromJson<T> = T Function(Json);
 
 @immutable
 @JsonSerializable(createToJson: false)
-final class MovieRef {
+final class QueueItem {
   final String id;
 
-  const MovieRef(this.id);
+  const QueueItem(this.id);
 
-  factory MovieRef.fromJson(Json json) => _$MovieRefFromJson(json);
+  factory QueueItem.fromJson(Json json) => _$QueueItemFromJson(json);
 }
 
 @immutable
 @JsonSerializable(createToJson: false)
 final class Queue {
-  final List<MovieRef> queue;
+  final List<QueueItem> queue;
 
   const Queue(this.queue);
 
@@ -134,7 +134,7 @@ class _HttpTimApi implements TimApi {
   }
 
   @override
-  Future<List<MovieRef>> getQueue() async {
+  Future<List<QueueItem>> getQueue() async {
     final client = _client;
     final url = _baseUri.resolve('/queue');
 

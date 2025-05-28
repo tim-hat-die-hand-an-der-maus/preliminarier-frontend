@@ -55,7 +55,7 @@ class QueueBloc extends Bloc<_QueueEvent, QueueState> {
     add(const _InitEvent());
   }
 
-  Future<Movie> _loadMovie(MovieRef ref) async {
+  Future<Movie> _loadMovie(QueueItem ref) async {
     final movie = await _api.getMovie(ref.id);
     if (movie == null) {
       throw MovieNotFoundException(ref.id);
@@ -64,7 +64,7 @@ class QueueBloc extends Bloc<_QueueEvent, QueueState> {
   }
 
   Future<void> _init(_InitEvent event, Emitter<QueueState> emit) async {
-    final List<MovieRef> movieRefs;
+    final List<QueueItem> movieRefs;
     try {
       movieRefs = await _api.getQueue();
     } on ApiException catch (e) {
