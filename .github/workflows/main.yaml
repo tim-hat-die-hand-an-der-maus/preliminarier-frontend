@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - uses: jdx/mise-action@v2
       - name: Get dependencies
         run: flutter pub get
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - uses: jdx/mise-action@v2
       - name: Get dependencies
         run: flutter pub get
@@ -46,7 +46,7 @@ jobs:
     needs: [check-format, lint]
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           lfs: true
       - name: Get dependencies
