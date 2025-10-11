@@ -35,7 +35,10 @@ class HomePage extends StatelessWidget {
       child: const Scaffold(
         body: Column(
           mainAxisSize: MainAxisSize.max,
-          children: [HeaderText(), Expanded(child: MovieList())],
+          children: [
+            HeaderText(),
+            Expanded(child: MovieList()),
+          ],
         ),
       ),
     );
