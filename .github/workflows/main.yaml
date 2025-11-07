@@ -22,8 +22,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v5
       - uses: jdx/mise-action@v3
-      - name: Get dependencies
-        run: flutter pub get
       - name: Check lib formatting
         run: dart format lib --set-exit-if-changed --output=none
 
@@ -34,6 +32,18 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v5
       - uses: jdx/mise-action@v3
+      - name: Configure pub dependencies cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/flutter/pub-cache
+            .dart_tool
+          key: flutter-pub-cache-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pubspec.lock') }}
+      - name: Configure pub cache location
+        env:
+          PUB_CACHE: ${{ runner.temp }}/flutter/pub-cache
+        run: |
+          echo "PUB_CACHE=${PUB_CACHE}" >> "$GITHUB_ENV"
       - name: Get dependencies
         run: flutter pub get
       - name: Code generation
@@ -44,15 +54,25 @@ jobs:
   build:
     name: Build Web Package
     runs-on: ubuntu-24.04
-    container:
-      image: ghcr.io/blindfoldedsurgery/flutter:4.0.0-3.35
-      options: --user 0
     needs: [check-format, lint]
     steps:
       - name: Check out repo
         uses: actions/checkout@v5
         with:
           lfs: true
+      - uses: jdx/mise-action@v3
+      - name: Configure pub dependencies cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/flutter/pub-cache
+            .dart_tool
+          key: flutter-pub-cache-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pubspec.lock') }}
+      - name: Configure pub cache location
+        env:
+          PUB_CACHE: ${{ runner.temp }}/flutter/pub-cache
+        run: |
+          echo "PUB_CACHE=${PUB_CACHE}" >> "$GITHUB_ENV"
       - name: Get dependencies
         run: flutter pub get
       - name: Code generation
