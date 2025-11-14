@@ -78,7 +78,7 @@ jobs:
       - name: Code generation
         run: dart run build_runner build
       - name: Build web package
-        run: flutter build web
+        run: flutter build web --wasm
       - name: Store build result
         uses: actions/upload-artifact@v5
         with:
