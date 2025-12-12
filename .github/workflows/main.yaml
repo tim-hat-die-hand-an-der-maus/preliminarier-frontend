@@ -80,7 +80,7 @@ jobs:
       - name: Build web package
         run: flutter build web --wasm
       - name: Store build result
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: web-app
           path: build/web
@@ -92,7 +92,7 @@ jobs:
     concurrency: production
     container: rclone/rclone:1.72
     steps:
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           name: web-app
       - name: Save rclone config
